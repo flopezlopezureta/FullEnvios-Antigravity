@@ -2,11 +2,16 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# Copiamos TODOS los archivos ya procesados desde GitHub Actions
-# Incluyendo node_modules (production) y dist
+# Primero instalamos solo las dependencias de producción (muy rápido)
+COPY package*.json ./
+RUN npm install --omit=dev
+
+# Copiamos el build generado por el Action (dist)
+COPY dist ./dist
+
+# Copiamos el resto de archivos del servidor (server.js, db.js, etc.)
 COPY . .
 
 EXPOSE 3001
 
-# No hay RUN npm install aquí. Todo viene ya listo del Action.
 CMD ["node", "server.js"]
