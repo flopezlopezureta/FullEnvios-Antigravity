@@ -1,4 +1,4 @@
-name: Docker Build and Push (Robust Hybrid)
+name: Docker Build and Push (Shield Strategy)
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
@@ -26,17 +25,19 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install ALL dependencies
         run: npm install
 
       - name: Build frontend
         run: npm run build
 
+      - name: Prune dev dependencies
+        run: npm prune --production
+
       - name: Log in to the Container registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push Docker image (Legacy Mode for Stability)
+      - name: Build and push Docker image (Zero-Load Pack)
         run: |
-          export DOCKER_BUILDKIT=0
           docker build -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/fullenvios-antigravity:latest -f Dockerfile.prod .
           docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/fullenvios-antigravity:latest
