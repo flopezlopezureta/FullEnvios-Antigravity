@@ -1,0 +1,23 @@
+node_modules
+dist
+.env
+.env.local
+.git
+.gitignore
+README.md
+Dockerfile
+docker-compose.yaml
+C:\Users\Selcom Desarrollo\.gemini
+C:\Users\Selcom Desarrollo\.gemini\antigravity
+brain
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
