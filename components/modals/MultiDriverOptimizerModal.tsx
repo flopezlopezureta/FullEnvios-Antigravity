@@ -23,7 +23,7 @@ const MultiDriverOptimizerModal: React.FC<MultiDriverOptimizerModalProps> = ({
     onClose,
     onConfirmAssignment,
     userLocation
-}) => {
+}: MultiDriverOptimizerModalProps) => {
     const [selectedDriverIds, setSelectedDriverIds] = useState<Set<string>>(new Set());
     const [optimizedResults, setOptimizedResults] = useState<{ driverId: string, packages: Package[], stats: RouteStats }[]>([]);
     const [isOptimizing, setIsOptimizing] = useState(false);
@@ -57,7 +57,7 @@ const MultiDriverOptimizerModal: React.FC<MultiDriverOptimizerModalProps> = ({
     }, [userLocation]);
 
     const handleToggleDriver = (driverId: string) => {
-        setSelectedDriverIds(prev => {
+        setSelectedDriverIds((prev: Set<string>) => {
             const newSet = new Set(prev);
             if (newSet.has(driverId)) newSet.delete(driverId);
             else newSet.add(driverId);
@@ -91,7 +91,7 @@ const MultiDriverOptimizerModal: React.FC<MultiDriverOptimizerModalProps> = ({
         if (!mapRef.current || optimizedResults.length === 0) return;
 
         // Clear existing routes
-        routingControlsRef.current.forEach(ctrl => mapRef.current.removeControl(ctrl));
+        routingControlsRef.current.forEach((ctrl: any) => mapRef.current.removeControl(ctrl));
         routingControlsRef.current = [];
 
         optimizedResults.forEach((result: any, driverIndex: number) => {
@@ -149,7 +149,7 @@ const MultiDriverOptimizerModal: React.FC<MultiDriverOptimizerModalProps> = ({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center p-4" onClick={onClose}>
-            <div className="bg-[var(--background-secondary)] rounded-xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-[var(--background-secondary)] rounded-xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col animate-fade-in-up" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                 <header className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
                     <div className="flex items-center gap-2">
                         <div className="p-2 bg-indigo-100 rounded-full text-indigo-600">
